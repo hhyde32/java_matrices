@@ -1,9 +1,3 @@
-/*
- * NAME: Hedley Hyde
- * UNIVERSITY ID: 5700617
- * DEPARTMENT: Mathematics
- */
-
 import java.util.Random;
 
 public class TriMatrix extends Matrix {
