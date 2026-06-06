@@ -1,42 +1,36 @@
-/*
- * NAME: Hedley Hyde
- * UNIVERSITY ID: 5700617
- * DEPARTMENT: Mathematics
- */
-
 public abstract class Matrix {
-  protected int iDim;
-  protected int jDim;
+    protected int iDim;
+    protected int jDim;
 
-  protected Matrix(int firstDim, int secondDim) {
-    this.iDim = firstDim;
-    this.jDim = secondDim;
-  }
-
-  public String toString() {
-    StringBuilder s = new StringBuilder();
-
-    for (int i = 0; i < this.iDim; i++) {
-      for (int j = 0; j < this.jDim; j++) {
-        s.append(String.format("%.2f ", getIJ(i, j)));
-      }
-      s.append(System.lineSeparator());
+    protected Matrix(int firstDim, int secondDim) {
+        this.iDim = firstDim;
+        this.jDim = secondDim;
     }
 
-    return s.toString();
-  }
+    public String toString() {
+        StringBuilder s = new StringBuilder();
 
-  public abstract double getIJ(int i, int j);
+        for (int i = 0; i < this.iDim; i++) {
+            for (int j = 0; j < this.jDim; j++) {
+                s.append(String.format("%.2f ", getIJ(i, j)));
+            }
+            s.append(System.lineSeparator());
+        }
 
-  public abstract void setIJ(int i, int j, double val);
+        return s.toString();
+    }
 
-  public abstract double determinant();
+    public abstract double getIJ(int i, int j);
 
-  public abstract Matrix add(Matrix second);
+    public abstract void setIJ(int i, int j, double val);
 
-  public abstract Matrix multiply(Matrix A);
+    public abstract double determinant();
 
-  public abstract Matrix multiply(double scalar);
+    public abstract Matrix add(Matrix second);
 
-  public abstract void random();
+    public abstract Matrix multiply(Matrix A);
+
+    public abstract Matrix multiply(double scalar);
+
+    public abstract void random();
 }

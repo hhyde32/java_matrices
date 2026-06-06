@@ -1,9 +1,3 @@
-/*
- * NAME: Hedley Hyde
- * UNIVERSITY ID: 5700617
- * DEPARTMENT: Mathematics
- */
-
 public class Project3 {
   public static double matVariance(Matrix matrix, int nSamp) {
     double sum1 = 0.0;
@@ -20,7 +14,7 @@ public class Project3 {
   }
 
   public static void main(String[] args) {
-    for (int n = 2; n <= 50; n++) {
+    for (int n = 2; n <= 30; n++) {
       GeneralMatrix genMat = new GeneralMatrix(n, n);
       TriMatrix triMat = new TriMatrix(n);
 
