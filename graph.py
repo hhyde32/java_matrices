@@ -18,7 +18,7 @@ ax1.set_ylabel(r'$\mathrm{Var}(\mathrm{det}(M))$', fontsize=12)
 ax1.set_xlabel('Matrix size $n$', fontsize=11)
 ax1.set_yscale('log')
 ax1.set_xlim(0, 50)
-ax1.set_ylim(10**-5, 10**15)  # Matches your template constraints
+ax1.set_ylim(10**-5, 10**15) 
 ax1.grid(True, which="both", linestyle="--", color='gray', alpha=0.3)
 
 # triangular matrix plot
@@ -28,12 +28,12 @@ ax2.set_ylabel(r'$\mathrm{Var}(\mathrm{det}(M))$', fontsize=12)
 ax2.set_xlabel('Matrix size $n$', fontsize=11)
 ax2.set_yscale('log')
 ax2.set_xlim(0, 50)
-ax2.set_ylim(10**-20, 10**0)  # Matches your template constraints
+ax2.set_ylim(10**-20, 10**0)
 ax2.grid(True, which="both", linestyle="--", color='gray', alpha=0.3)
 
-# Clean up spacing
+
 plt.tight_layout()
 
-# Save figure
+
 plt.savefig('variance_plots.png', dpi=300)
 plt.show()
