@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## 🛠 Usage
 
-Run the following command to save the project data to variance.data
+Run the following command to save the project data to variance.data. Note this may take around a minute.
 
 ```bash
 java Project3 > variance.data
