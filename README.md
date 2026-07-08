@@ -6,7 +6,7 @@ looking at its relationship with dimension.
 
 ## 📸 Demo
 
-The program graph.py uses the variance data from the program to produce the following plots
+The program graph.py uses the variance data from the project to produce the following plots
 
 ![Variance Plots](variance_plots.png)
 
