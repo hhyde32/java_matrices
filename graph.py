@@ -1,3 +1,5 @@
+# Python program that generates plots to show the relationship between variance and dimension
+
 import matplotlib.pyplot as plt
 import numpy as np
 

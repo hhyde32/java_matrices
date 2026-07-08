@@ -1,6 +1,9 @@
+// This class represents a general mxn matrix 
+
 import java.util.Random;
 
 public class GeneralMatrix extends Matrix {
+    // 2-dimensional array that holds the values of the matrix
     private double[][] values;
 
     public GeneralMatrix(int firstDim, int secondDim) {
@@ -8,6 +11,7 @@ public class GeneralMatrix extends Matrix {
         this.values = new double[firstDim][secondDim];
     }
 
+    // Initialises the matrix as a copy of another general matrix
     public GeneralMatrix(GeneralMatrix second) {
         this(second.iDim, second.jDim);
 
@@ -106,6 +110,7 @@ public class GeneralMatrix extends Matrix {
         }
     }
 
+    // Performs lower-upper decomposition on the matrix and returns a matrix storing the matrices L and U 
     public GeneralMatrix LUdecomp(double[] sign) {
         if (jDim != iDim)
             throw new MatrixException("Matrix is not square");
@@ -168,6 +173,7 @@ public class GeneralMatrix extends Matrix {
         return a;
     }
 
+    // Tests
     public static void main(String[] args) {
         GeneralMatrix A = new GeneralMatrix(5, 5);
         GeneralMatrix B = new GeneralMatrix(5, 5);
