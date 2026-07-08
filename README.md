@@ -4,7 +4,7 @@ This project studies the statistical properties of matrix determinants, in parti
  the variance of determinants in random general and tri-diagonal matrices, 
 looking at its relationship with dimension.
 
-## 📸 Demo
+## 📸 Visualisation
 
 The program graph.py uses the variance data from the project to produce the following plots
 
