@@ -1,8 +1,8 @@
-// Class to generate statistics on random matrices
+public class Main {
+    // Class to generate statistics on random matrices
 
-public class Project3 {
-    // Method to estimate the variance of the determinants of nSamp random matrices
     public static double matVariance(Matrix matrix, int nSamp) {
+        // Estimates the variance of the determinants from a sample of random matrices
         double sum1 = 0.0;
         double sum2 = 0.0;
         for (int i = 0; i < nSamp; i++) {
@@ -16,8 +16,8 @@ public class Project3 {
         return matVar;
     }
 
-    // Generates the variance for TriMatrix and GeneralMatrix for varying dimensions (2 <= n <= 50) 
     public static void main(String[] args) {
+    // Generates the variance for TriMatrix and GeneralMatrix for varying dimensions
         for (int n = 2; n <= 50; n++) {
             GeneralMatrix genMat = new GeneralMatrix(n, n);
             TriMatrix triMat = new TriMatrix(n);
