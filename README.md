@@ -17,7 +17,7 @@ there is a linear inverse relationship between dimension and variance.
 
 ## 📦 Installation
 
-Clone the repo and install dependencies:
+Clone the repository and install the dependencies in requirement.txt:
 
 ```bash
 git clone https://github.com/hhyde32/matvar.git
@@ -27,10 +27,11 @@ pip install -r requirements.txt
 
 ## 🛠 Usage
 
-Run the following command to save the project data to variance.data. Note this may take around a minute.
+Run the following command to compile and save the project data to variance.data. Note this may take around a minute depending on your system.
 
 ```bash
-java Project3 > variance.data
+javac Main.java
+java Main > variance.data
 ```
 
 To generate the graphs above, run this command:
