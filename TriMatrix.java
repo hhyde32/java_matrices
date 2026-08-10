@@ -13,7 +13,8 @@ public class TriMatrix extends Matrix {
         
         if (dimension < 0) {
             throw new MatrixException("Matrix size negative")
-        }
+        } else if (dimesion < 2) {
+            throw new MatrixException("dimension < 2")
 
         super(dimension, dimension);
         this.diagonal = new double[dimension];
@@ -39,6 +40,7 @@ public class TriMatrix extends Matrix {
 
     public void setIJ(int i, int j, double value) {
         // Set the value at (i, j).
+
         if (i < 0 || i >= iDim || j < 0 || j >= jDim) {
             throw new MatrixException("Index out of bounds");
         }
