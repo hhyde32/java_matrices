@@ -1,17 +1,18 @@
-// This class is a template for the TriMatrix and GeneralMatrix classes
-
 public abstract class Matrix {
+    // Abstract base class for TriMatrix and GeneralMatrix.
+    
+    // Matrix dimensions.
     protected int iDim;
     protected int jDim;
 
-    // Initialises the dimensions of the matrix to be stored
     protected Matrix(int firstDim, int secondDim) {
+        // Initialise the dimensions of the matrix.
         this.iDim = firstDim;
         this.jDim = secondDim;
     }
 
-    // Method to return the matrix in string format
     public String toString() {
+        // Convert the matrix to string format.
         StringBuilder s = new StringBuilder();
 
         for (int i = 0; i < this.iDim; i++) {
@@ -24,24 +25,17 @@ public abstract class Matrix {
         return s.toString();
     }
 
-    // Returns the dimensions of the matrix
-    public abstract double getIJ(int i, int j);
+    public abstract double getIJ(int i, int j); // Get the value at position (i, j).
 
-    // Method to set the value at position i,j
-    public abstract void setIJ(int i, int j, double val);
+    public abstract void setIJ(int i, int j, double val); // Set the value at position (i, j).
+    
+    public abstract double determinant(); // Calculate the determinant of the matrix.
 
-    // Calculates the determinant of the matrix
-    public abstract double determinant();
+    public abstract Matrix add(Matrix second); // Add the matrix to another matrix.
 
-    // Returns the result of adding the matrix to another matrix
-    public abstract Matrix add(Matrix second);
+    public abstract Matrix multiply(Matrix A); // Multiply the matrix by another matrix.
 
-    // Returns the result of multiplying the matrix by another matrix
-    public abstract Matrix multiply(Matrix A);
+    public abstract Matrix multiply(double scalar); // Multiply the matrix by a scalar.
 
-    // Returns the result of multiplying the matrix by a scalar constant
-    public abstract Matrix multiply(double scalar);
-
-    // Method to fill the matrix with random numbers
-    public abstract void random();
+    public abstract void random(); // Populate the matrix with random numbers.
 }
