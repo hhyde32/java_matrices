@@ -1,16 +1,20 @@
-// This class represents a tri-diagonal matrix of size n x n extending the Matrix class
-
 import java.util.Random;
 
 public class TriMatrix extends Matrix {
+    // Class to represent a tri-diagonal matrix of size n x n.
 
-    // Stores each diagnoanal as a single array instead of storing a complete matrix of values
+    // Store each diagnoanal as a single array instead of storing a complete matrix of values.
     private double[] diagonal;
     private double[] upperDiagonal;
     private double[] lowerDiagonal;
 
-    // Initialises the dimension of the arrays
     public TriMatrix(int dimension) {
+        // Initialise the length of the diagonal arrays.
+        
+        if (dimension < 0) {
+            throw new MatrixException("Matrix size negative")
+        }
+
         super(dimension, dimension);
         this.diagonal = new double[dimension];
         this.upperDiagonal = new double[dimension - 1];
@@ -18,6 +22,7 @@ public class TriMatrix extends Matrix {
     }
 
     public double getIJ(int i, int j) {
+        // Get the value at (i, j).
         if (i < 0 || i >= iDim || j < 0 || j >= jDim) {
             throw new MatrixException("Index out of bounds");
         }
@@ -33,6 +38,7 @@ public class TriMatrix extends Matrix {
     }
 
     public void setIJ(int i, int j, double value) {
+        // Set the value at (i, j).
         if (i < 0 || i >= iDim || j < 0 || j >= jDim) {
             throw new MatrixException("Index out of bounds");
         }
@@ -46,6 +52,7 @@ public class TriMatrix extends Matrix {
     }
 
     public double determinant() {
+        // Calculate the determinant of the matrix using lower-upper decomposition.
         TriMatrix decomp = LUdecomp();
         double det = 1.0;
 
@@ -56,8 +63,94 @@ public class TriMatrix extends Matrix {
         return det;
     }
 
-    // Method to perform lower-upper decomposition on the matrix
+    public Matrix add(Matrix second) {
+        // Add another matrix.
+        
+        // Check matrices are equal in dimension.
+        if (iDim != second.iDim || jDim != second.jDim) {
+            throw new MatrixException("Matrices can only be added to matrices of the same dimension");
+        }
+        Matrix result = null;
+
+        // Perform different algorithms depending on matrix type being added.
+        if (second instanceof TriMatrix) {
+            TriMatrix triResult = new TriMatrix(iDim);
+            for (int i = 0; i < iDim; i++) {
+                triResult.setIJ(i, i, this.getIJ(i, i) + second.getIJ(i, i));
+                if (i > 0) {
+                    triResult.setIJ(i, i - 1, this.getIJ(i, i - 1) + second.getIJ(i, i - 1));
+                }
+                if (i < iDim - 1) {
+                    triResult.setIJ(i, i + 1, this.getIJ(i, i + 1) + second.getIJ(i, i + 1));
+                }
+            }
+            result = triResult;
+        } else if (second instanceof GeneralMatrix) {
+            GeneralMatrix genResult = new GeneralMatrix(iDim, iDim);
+            for (int i = 0; i < iDim; i++) {
+                for (int j = 0; j < iDim; j++) {
+                    genResult.setIJ(i, j, this.getIJ(i, j) + second.getIJ(i, j));
+                }
+            }
+            result = genResult;
+        }
+        return result;
+    }
+
+    public Matrix multiply(Matrix A) {
+        // Multiply the matrix by another matrix.
+
+        if (jDim != A.iDim) {
+            throw new MatrixException("Inner dimensions must match for multiplication.");
+        }
+
+        GeneralMatrix result = new GeneralMatrix(iDim, A.jDim);
+        for (int i = 0; i < iDim; i++) {
+            for (int j = 0; j < A.jDim; j++) {
+                double sum = getIJ(i, i) * A.getIJ(i, j);
+                if (i > 0) {
+                    sum += getIJ(i, i - 1) * A.getIJ(i - 1, j);
+                }
+
+                if (i < iDim - 1) {
+                    sum += getIJ(i, i + 1) * A.getIJ(i + 1, j);
+                }
+                result.setIJ(i, j, sum);
+            }
+        }
+        return result;
+    }
+
+    public Matrix multiply(double scalar) {
+        // Multiply the matrix by a scalar.
+        TriMatrix result = new TriMatrix(iDim);
+
+        result.setIJ(0, 0, this.getIJ(0, 0) * scalar);
+        for (int i = 1; i < iDim; i++) {
+            result.setIJ(i, i, this.getIJ(i, i) * scalar);
+            result.setIJ(i - 1, i, this.getIJ(i - 1, i) * scalar);
+            result.setIJ(i, i - 1, this.getIJ(i, i - 1) * scalar);
+        }
+        return result;
+    }
+
+    public void random() {
+        // Populate the matrix with random numbers.
+        Random r = new Random();
+
+        for (int i = 0; i < iDim; i++) {
+            this.setIJ(i, i, r.nextDouble());
+            if (i > 0) {
+                this.setIJ(i, i - 1, r.nextDouble());
+            }
+            if (i < iDim - 1) {
+                this.setIJ(i, i + 1, r.nextDouble());
+            }
+        }
+    }
+
     public TriMatrix LUdecomp() {
+        // Perform lower-upper decomposition on the matrix.
         TriMatrix result = new TriMatrix(iDim);
 
         result.setIJ(0, 0, getIJ(0, 0));
@@ -86,91 +179,8 @@ public class TriMatrix extends Matrix {
         return result;
     }
 
-    public Matrix add(Matrix second) {
-        if (iDim != second.iDim || jDim != second.jDim) {
-            throw new MatrixException("Matrices can only be added to matrices of the same dimension");
-        }
-        Matrix result = null;
-
-        if (second instanceof TriMatrix) {
-            TriMatrix triResult = new TriMatrix(iDim);
-
-            for (int i = 0; i < iDim; i++) {
-                triResult.setIJ(i, i, this.getIJ(i, i) + second.getIJ(i, i));
-                if (i > 0) {
-                    triResult.setIJ(i, i - 1, this.getIJ(i, i - 1) + second.getIJ(i, i - 1));
-                }
-                if (i < iDim - 1) {
-                    triResult.setIJ(i, i + 1, this.getIJ(i, i + 1) + second.getIJ(i, i + 1));
-                }
-            }
-            result = triResult;
-        } else if (second instanceof GeneralMatrix) {
-            GeneralMatrix genResult = new GeneralMatrix(iDim, iDim);
-            for (int i = 0; i < iDim; i++) {
-                for (int j = 0; j < iDim; j++) {
-                    genResult.setIJ(i, j, this.getIJ(i, j) + second.getIJ(i, j));
-                }
-            }
-            result = genResult;
-        }
-        return result;
-    }
-
-    public Matrix multiply(Matrix A) {
-        if (jDim != A.iDim) {
-            throw new MatrixException("Inner dimensions must match for multiplication.");
-        }
-        GeneralMatrix result = new GeneralMatrix(iDim, A.jDim);
-
-        for (int i = 0; i < iDim; i++) {
-            for (int j = 0; j < A.jDim; j++) {
-                double sum = getIJ(i, i) * A.getIJ(i, j);
-
-                if (i > 0) {
-                    sum += getIJ(i, i - 1) * A.getIJ(i - 1, j);
-                }
-
-                if (i < iDim - 1) {
-                    sum += getIJ(i, i + 1) * A.getIJ(i + 1, j);
-                }
-
-                result.setIJ(i, j, sum);
-            }
-        }
-
-        return result;
-    }
-
-    public Matrix multiply(double scalar) {
-        TriMatrix result = new TriMatrix(iDim);
-
-        result.setIJ(0, 0, this.getIJ(0, 0) * scalar);
-        for (int i = 1; i < iDim; i++) {
-            result.setIJ(i, i, this.getIJ(i, i) * scalar);
-            result.setIJ(i - 1, i, this.getIJ(i - 1, i) * scalar);
-            result.setIJ(i, i - 1, this.getIJ(i, i - 1) * scalar);
-        }
-        return result;
-    }
-
-    public void random() {
-
-        Random r = new Random();
-
-        for (int i = 0; i < iDim; i++) {
-            this.setIJ(i, i, r.nextDouble());
-            if (i > 0) {
-                this.setIJ(i, i - 1, r.nextDouble());
-            }
-            if (i < iDim - 1) {
-                this.setIJ(i, i + 1, r.nextDouble());
-            }
-        }
-    }
-
-    // Tests
     public static void main(String[] args) {
+        // Tests.
         TriMatrix A = new TriMatrix(4);
         GeneralMatrix B = new GeneralMatrix(4, 4);
 

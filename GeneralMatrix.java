@@ -1,18 +1,24 @@
-// This class represents a general mxn matrix 
-
 import java.util.Random;
 
 public class GeneralMatrix extends Matrix {
-    // 2-dimensional array that holds the values of the matrix
+    // Class to represent a general m x n matrix .
+    
+    // 2-dimensional array that holds the values of the matrix.
     private double[][] values;
 
     public GeneralMatrix(int firstDim, int secondDim) {
+        // Initialise an empty matrix with dimension firstDim x secondDim with
+
+        if (firstDim < 0 || secondDim < 0) {
+            throw new MatrixException("Matrix size negative")
+        }
+        
         super(firstDim, secondDim);
         this.values = new double[firstDim][secondDim];
     }
 
-    // Initialises the matrix as a copy of another general matrix
     public GeneralMatrix(GeneralMatrix second) {
+        // Initialise the matrix as a copy of another general matrix.
         this(second.iDim, second.jDim);
 
         for (int i = 0; i < iDim; i++) {
@@ -23,6 +29,7 @@ public class GeneralMatrix extends Matrix {
     }
 
     public double getIJ(int i, int j) {
+        // Get the value at (i, j).
         if (i < 0 || i >= iDim || j < 0 || j >= jDim) {
             throw new MatrixException("Index out of bounds");
         }
@@ -30,6 +37,7 @@ public class GeneralMatrix extends Matrix {
     }
 
     public void setIJ(int i, int j, double value) {
+        // Set the value at (i, j).
         if (i < 0 || i >= iDim || j < 0 || j >= jDim) {
             throw new MatrixException("Index out of bounds");
         }
@@ -37,6 +45,7 @@ public class GeneralMatrix extends Matrix {
     }
 
     public double determinant() {
+        // Calculate the determinant of the matrix using lower-upper decomposition.
         double[] sign = new double[1];
         GeneralMatrix decomp = LUdecomp(sign);
 
@@ -50,6 +59,7 @@ public class GeneralMatrix extends Matrix {
     }
 
     public Matrix add(Matrix second) {
+        // Add another matrix.
         if (iDim != second.iDim || jDim != second.jDim) {
             throw new MatrixException("Matrices can only be added to matrices of the same dimension");
         }
@@ -65,20 +75,8 @@ public class GeneralMatrix extends Matrix {
         return result;
     }
 
-    public Matrix multiply(double scalar) {
-        GeneralMatrix result = new GeneralMatrix(iDim, jDim);
-        double val;
-
-        for (int i = 0; i < iDim; i++) {
-            for (int j = 0; j < jDim; j++) {
-                val = getIJ(i, j) * scalar;
-                result.setIJ(i, j, val);
-            }
-        }
-        return result;
-    }
-
     public Matrix multiply(Matrix A) {
+        // Multiply the matrix by another matrix.
 
         if (jDim != A.iDim) {
             throw new MatrixException("Inner dimensions must match for multiplication.");
@@ -98,7 +96,22 @@ public class GeneralMatrix extends Matrix {
         return result;
     }
 
+    public Matrix multiply(double scalar) {
+        // Multiply the matrix by a scalar.
+        GeneralMatrix result = new GeneralMatrix(iDim, jDim);
+        double val;
+
+        for (int i = 0; i < iDim; i++) {
+            for (int j = 0; j < jDim; j++) {
+                val = getIJ(i, j) * scalar;
+                result.setIJ(i, j, val);
+            }
+        }
+        return result;
+    }
+
     public void random() {
+        // Populate the matrix with random numbers.
         Random r = new Random();
 
         double val;
@@ -110,8 +123,8 @@ public class GeneralMatrix extends Matrix {
         }
     }
 
-    // Performs lower-upper decomposition on the matrix and returns a matrix storing the matrices L and U 
     public GeneralMatrix LUdecomp(double[] sign) {
+        // Perform lower-upper decomposition on the matrix.
         if (jDim != iDim)
             throw new MatrixException("Matrix is not square");
         if (sign.length != 1)
@@ -173,8 +186,8 @@ public class GeneralMatrix extends Matrix {
         return a;
     }
 
-    // Tests
     public static void main(String[] args) {
+        // Tests.
         GeneralMatrix A = new GeneralMatrix(5, 5);
         GeneralMatrix B = new GeneralMatrix(5, 5);
 
