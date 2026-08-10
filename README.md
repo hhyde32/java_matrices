@@ -8,7 +8,7 @@ looking at its relationship with dimension.
 
 The program graph.py uses the variance data from the project to produce the following plots
 
-![Variance Plots](variance_plots.png)
+![Variance Plots](images/variance_plots.png)
 
 As you can see, as the dimension of a general matrix increases 
 so does the variance of the determinant. On the other hand, you 
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## 🛠 Usage
 
-Run the following command to compile and save the project data to variance.data. Note this may take around a minute depending on your system.
+Run the following commands to compile and save the project data to variance.data. Note this may take around a minute depending on your system.
 
 ```bash
 javac Main.java
